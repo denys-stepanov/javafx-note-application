@@ -1,6 +1,9 @@
 package com.javafx.exampl.entity;
 
+import lombok.experimental.Accessors;
+
 import java.time.LocalDateTime;
+
 
 public class Note {
 

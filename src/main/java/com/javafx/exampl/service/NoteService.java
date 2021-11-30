@@ -4,6 +4,9 @@ import com.javafx.exampl.dao.DaoException;
 import com.javafx.exampl.dao.NoteDao;
 import com.javafx.exampl.entity.Note;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoteService {
@@ -19,7 +22,29 @@ public class NoteService {
     }
 
     public List<Note> findAll() {
-        return null;
+        ResultSet resultSet = noteDao.findNote();
+        List<Note> listNote = new ArrayList<>();
+
+
+
+        try {
+            while (resultSet.next()){
+                Note note = new Note();
+                note.setId(resultSet.getInt(1));
+                note.setDescription(resultSet.getString(2));
+                note.setCreatedTime(resultSet.getTimestamp(3).toLocalDateTime());
+                listNote.add(note);
+
+            }
+        } catch (SQLException e) {
+                e.printStackTrace();
+        }
+
+
+        return listNote;
     }
 
+    public void delete(int id){
+        noteDao.delete(id);
+    }
 }

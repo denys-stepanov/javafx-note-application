@@ -23,7 +23,7 @@ public class NotesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        addCreatedNote();
     }
 
     public void createNote() throws ServiceException {
@@ -36,9 +36,12 @@ public class NotesController implements Initializable {
         Note createNoteId = noteService.create(note);
         noteList.getItems().add(createNoteId);
     }
-
+    public void addCreatedNote(){
+        noteList.getItems().addAll(noteService.findAll());
+    }
     public void deleteNote() {
         Note selectedItem = noteList.getSelectionModel().getSelectedItem();
+        noteService.delete(selectedItem.getId());
         noteList.getItems().remove(selectedItem);
     }
 }
